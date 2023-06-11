@@ -9,8 +9,9 @@ import Foundation
 import ZIPFoundation
 
 class BundleManager {
+    
     func downloadAndExtractPackage(from url: URL, completion: @escaping (Result<URL, Error>) -> Void) {
-        let fileManager = FileManager()
+        let fileManager = FileManager.default
         
         URLSession.shared.downloadTask(with: url) { (tempURL, _, error) in
             guard let tempURL = tempURL else {
@@ -18,29 +19,33 @@ class BundleManager {
                 return
             }
             
-            let destinationURL = fileManager.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
-            
             do {
-                try fileManager.moveItem(at: tempURL, to: destinationURL)
-                try self.extractZipFile(at: destinationURL)
+                let destinationURL = Bundle.main.bundleURL.appendingPathComponent("bundles")
+         //       let destinationURL = fileManager.temporaryDirectory.appendingPathComponent("bundles")
+                
+                try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+                
+                // Remove existing files in the destination folder
+                let fileURLs = try fileManager.contentsOfDirectory(at: destinationURL, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+                for fileURL in fileURLs {
+                    try fileManager.removeItem(at: fileURL)
+                }
+                
+                try self.extractZipFile(at: tempURL, to: destinationURL)
                 completion(.success(destinationURL))
             } catch {
                 completion(.failure(error))
             }
         }.resume()
     }
-    
-    private func extractZipFile(at url: URL) throws {
-        let fileManager = FileManager()
-        let destinationURL = fileManager.temporaryDirectory
-        
-        try fileManager.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+
+    private func extractZipFile(at url: URL, to destinationURL: URL) throws {
+        let fileManager = FileManager.default
         
         try fileManager.unzipItem(at: url, to: destinationURL)
     }
-    
-    func dowloadCats() {
-        
+
+    func downloadCats() {
         guard let url = URL(string: "https://gavinhamilton1.github.io/cats_v1.0.1.zip") else {
             print("Invalid URL")
             return

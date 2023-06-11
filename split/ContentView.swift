@@ -13,7 +13,7 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 Button("Download Cats") {
-                    BM.dowloadCats()
+                    BM.downloadCats()
                 }
                 
                 Button("Build Launcher") {
