@@ -8,14 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    let BM = BundleManager()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            VStack {
+                Button("Download Cats") {
+                    BM.dowloadCats()
+                }
+                
+                Button("Build Launcher") {
+                    BM.buildLauncher { result in
+                        switch result {
+                        case .success(let launcher):
+                            // Use the launcher object to build your launcher UI
+                            print(launcher.menu)
+                            print(launcher.apps)
+                            
+                        case .failure(let error):
+                            // Handle the error case
+                            print("Error building launcher: \(error)")
+                        }
+                    }
+                }
+                
+                List {
+                    NavigationLink(destination: WebView(url: URL(string: "http://192.168.0.216:3000")!), label: { Text("Click Me")})
+                }
+            }
         }
-        .padding()
     }
 }
 

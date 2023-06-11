@@ -14,6 +14,11 @@
 		101EC7682A318B2E0095A0D8 /* splitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101EC7672A318B2E0095A0D8 /* splitTests.swift */; };
 		101EC7722A318B2E0095A0D8 /* splitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101EC7712A318B2E0095A0D8 /* splitUITests.swift */; };
 		101EC7742A318B2E0095A0D8 /* splitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101EC7732A318B2E0095A0D8 /* splitUITestsLaunchTests.swift */; };
+		101EC7812A318B8B0095A0D8 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101EC7802A318B8B0095A0D8 /* WebView.swift */; };
+		101EC7832A3198440095A0D8 /* build in Resources */ = {isa = PBXBuildFile; fileRef = 101EC7822A3198440095A0D8 /* build */; };
+		10B218322A363293008DC138 /* BundleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B218312A363293008DC138 /* BundleManager.swift */; };
+		10B218352A363406008DC138 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 10B218342A363406008DC138 /* ZIPFoundation */; };
+		10B218372A363FA2008DC138 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10B218362A363FA2008DC138 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,10 @@
 		101EC76D2A318B2E0095A0D8 /* splitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = splitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		101EC7712A318B2E0095A0D8 /* splitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splitUITests.swift; sourceTree = "<group>"; };
 		101EC7732A318B2E0095A0D8 /* splitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		101EC7802A318B8B0095A0D8 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		101EC7822A3198440095A0D8 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; path = build; sourceTree = "<group>"; };
+		10B218312A363293008DC138 /* BundleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleManager.swift; sourceTree = "<group>"; };
+		10B218362A363FA2008DC138 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10B218352A363406008DC138 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,8 +104,12 @@
 		101EC7552A318B2D0095A0D8 /* split */ = {
 			isa = PBXGroup;
 			children = (
+				101EC7822A3198440095A0D8 /* build */,
 				101EC7562A318B2D0095A0D8 /* splitApp.swift */,
 				101EC7582A318B2D0095A0D8 /* ContentView.swift */,
+				10B218312A363293008DC138 /* BundleManager.swift */,
+				10B218362A363FA2008DC138 /* Models.swift */,
+				101EC7802A318B8B0095A0D8 /* WebView.swift */,
 				101EC75A2A318B2E0095A0D8 /* Assets.xcassets */,
 				101EC75C2A318B2E0095A0D8 /* Preview Content */,
 			);
@@ -143,6 +157,9 @@
 			dependencies = (
 			);
 			name = split;
+			packageProductDependencies = (
+				10B218342A363406008DC138 /* ZIPFoundation */,
+			);
 			productName = split;
 			productReference = 101EC7532A318B2D0095A0D8 /* split.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +232,9 @@
 				Base,
 			);
 			mainGroup = 101EC74A2A318B2D0095A0D8;
+			packageReferences = (
+				10B218332A363406008DC138 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			productRefGroup = 101EC7542A318B2D0095A0D8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -231,6 +251,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				101EC7832A3198440095A0D8 /* build in Resources */,
 				101EC75E2A318B2E0095A0D8 /* Preview Assets.xcassets in Resources */,
 				101EC75B2A318B2E0095A0D8 /* Assets.xcassets in Resources */,
 			);
@@ -257,8 +278,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				101EC7812A318B8B0095A0D8 /* WebView.swift in Sources */,
 				101EC7592A318B2D0095A0D8 /* ContentView.swift in Sources */,
 				101EC7572A318B2D0095A0D8 /* splitApp.swift in Sources */,
+				10B218322A363293008DC138 /* BundleManager.swift in Sources */,
+				10B218372A363FA2008DC138 /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +607,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		10B218332A363406008DC138 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.16;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		10B218342A363406008DC138 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 10B218332A363406008DC138 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 101EC74B2A318B2D0095A0D8 /* Project object */;
 }
