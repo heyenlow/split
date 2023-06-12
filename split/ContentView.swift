@@ -28,7 +28,7 @@ struct ContentView: View {
                     
                     List {
                         ForEach(appList.menu, id: \.title) { menuItem in
-                            NavigationLink(destination: WebView(app: appList.apps.first(where: {$0.id == menuItem.target})!), label: { Text(menuItem.title) })
+                            NavigationLink(destination: WebView(app: appList.apps.first(where: {$0.id == menuItem.target})!).ignoresSafeArea(), label: { Text(menuItem.title) })
                         }
                     }
                 } else {
