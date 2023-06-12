@@ -69,41 +69,25 @@ class BundleManager {
         }
     }
     
-    func buildLauncher(completion: @escaping (Result<Launcher, Error>) -> Void) {
+    func buildLauncher() async throws -> Launcher {
         guard let url = URL(string: "https://gavinhamilton1.github.io/appdefs.json") else {
-            let error = NSError(domain: "Invalid URL", code: 0, userInfo: nil)
-            completion(.failure(error))
-            return
+            throw NSError(domain: "Invalid URL", code: 0, userInfo: nil)
         }
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            
+            let httpResponse = response as? HTTPURLResponse
+            guard let statusCode = httpResponse?.statusCode, (200...299).contains(statusCode) else {
+                throw NSError(domain: "Invalid HTTP response", code: 0, userInfo: nil)
             }
             
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                let error = NSError(domain: "Invalid HTTP response", code: 0, userInfo: nil)
-                completion(.failure(error))
-                return
-            }
-            
-            guard let data = data else {
-                let error = NSError(domain: "No data received", code: 0, userInfo: nil)
-                completion(.failure(error))
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let launcherData = try decoder.decode(AppDefs.self, from: data)
-                completion(.success(launcherData.launcher))
-            } catch {
-                completion(.failure(error))
-            }
+            let decoder = JSONDecoder()
+            let launcherData = try decoder.decode(AppDefs.self, from: data)
+            return launcherData.launcher
+        } catch {
+            throw error
         }
-        
-        task.resume()
     }
     
     func getBundlePath(app: AppItem) -> URL {

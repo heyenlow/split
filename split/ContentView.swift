@@ -17,17 +17,11 @@ struct ContentView: View {
             VStack {
                 
                 Button("Build Launcher") {
-                    BM.buildLauncher { result in
-                        switch result {
-                        case .success(let launcher):
-                            // Use the launcher object to build your launcher UI
-                            self.launcher = launcher
-                            print(launcher.menu)
-                            print(launcher.apps)
-                            
-                        case .failure(let error):
-                            // Handle the error case
-                            print("Error building launcher: \(error)")
+                    Task {
+                        do {
+                            self.launcher = try await BM.buildLauncher()
+                        } catch {
+                            print("Failed to get launcher")
                         }
                     }
                 }
