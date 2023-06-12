@@ -19,10 +19,17 @@ struct WebView: UIViewRepresentable {
     func updateUIView(_ webView: WKWebView, context: Context) {
         
         let BM = BundleManager()
-        let bundleURL = BM.getBundlePath(app: app)
-        webView.loadFileURL(bundleURL, allowingReadAccessTo: bundleURL)
-        
-        let request = URLRequest(url: bundleURL)
-        webView.load(request)
+        if app.type == "static" {
+            let bundleURL = BM.getBundlePath(app: app)
+            webView.loadFileURL(bundleURL, allowingReadAccessTo: bundleURL)
+            let request = URLRequest(url: bundleURL)
+            webView.load(request)
+        } else {
+            let removedHTTPS = app.bundle.dropFirst(8)
+            if let url = URL(string: String(removedHTTPS)) {
+                let request = URLRequest(url: url)
+                webView.load(request)
+            }
+        }
     }
 }

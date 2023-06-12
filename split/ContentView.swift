@@ -16,15 +16,16 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 if let appList = self.launcher {
-                    Button("Update All") {
+                    Button(action: {
                         Task {
                             await BM.downloadBundles(apps: launcher!.apps)
                         }
-                    }
-                    .padding()
-                    .background(.green)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    }, label: {
+                            HStack {
+                                Text("Update All")
+                                Image(systemName: "gobackward")
+                            }
+                    })
                     
                     List {
                         ForEach(appList.menu, id: \.title) { menuItem in

@@ -24,14 +24,18 @@ class BundleManager {
         }
         
         try fileManager.unzipItem(at: tempURL, to: destinationURL)
-        
+        getFileSize(path: destinationURL)
+
         return destinationURL
     }
     
-    private func extractZipFile(at url: URL, to destinationURL: URL) throws {
-        let fileManager = FileManager.default
-        
-        try fileManager.unzipItem(at: url, to: destinationURL)
+    func getFileSize(path: URL) {
+        do {
+            let attr = try FileManager.default.attributesOfFileSystem(forPath: path.absoluteString)
+            print(attr.values)
+        } catch {
+            print("No file at path")
+        }
     }
     
     private func downloadBundle(app: AppItem) async throws -> URL {
