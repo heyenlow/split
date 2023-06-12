@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var launcher: Launcher?
     let BM = BundleManager()
+
     var body: some View {
         NavigationView {
             VStack {
-                Button("Download Cats") {
-                    BM.downloadCats()
-                }
                 
                 Button("Build Launcher") {
                     BM.buildLauncher { result in
                         switch result {
                         case .success(let launcher):
                             // Use the launcher object to build your launcher UI
+                            self.launcher = launcher
                             print(launcher.menu)
                             print(launcher.apps)
                             
@@ -31,8 +32,19 @@ struct ContentView: View {
                     }
                 }
                 
-                List {
-                    NavigationLink(destination: WebView(url: URL(string: "http://192.168.0.216:3000")!), label: { Text("Click Me")})
+                Button("Download All") {
+                    Task {
+                        await BM.downloadBundles(apps: launcher!.apps)
+                    }
+                }
+                
+                
+                if let appList = self.launcher {
+                    List {
+                        ForEach(appList.menu, id: \.title) { menuItem in
+                            NavigationLink(destination: WebView(app: appList.apps.first(where: {$0.id == menuItem.target})!), label: { Text(menuItem.title) })
+                        }
+                    }
                 }
             }
         }

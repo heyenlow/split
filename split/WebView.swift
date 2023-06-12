@@ -10,22 +10,24 @@ import SwiftUI
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    let url: URL
-
+    let app: AppItem
+    
     func makeUIView(context: Context) -> WKWebView {
         return WKWebView(frame: .zero)
     }
     
     func updateUIView(_ webView: WKWebView, context: Context) {
-        if let bundleURL = Bundle.main.url(forResource: "index", withExtension: ".html", subdirectory: "build") {
-            webView.loadFileURL(bundleURL, allowingReadAccessTo: bundleURL)
-            
-            let request = URLRequest(url: bundleURL)
-            webView.load(request)
-
-        } else {
-            let request = URLRequest(url: url)
-            webView.load(request)
-        }
+        
+        let BM = BundleManager()
+        let bundleURL = BM.getBundlePath(app: app)  //Bundle.main.url(forResource: "index", withExtension: ".html", subdirectory: "build") {
+        webView.loadFileURL(bundleURL, allowingReadAccessTo: bundleURL)
+        
+        let request = URLRequest(url: bundleURL)
+        webView.load(request)
+        
+        //        else {
+        //            let request = URLRequest(url: url)
+        //            webView.load(request)
+        //        }
     }
 }
