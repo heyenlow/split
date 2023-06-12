@@ -19,15 +19,10 @@ struct WebView: UIViewRepresentable {
     func updateUIView(_ webView: WKWebView, context: Context) {
         
         let BM = BundleManager()
-        let bundleURL = BM.getBundlePath(app: app)  //Bundle.main.url(forResource: "index", withExtension: ".html", subdirectory: "build") {
+        let bundleURL = BM.getBundlePath(app: app)
         webView.loadFileURL(bundleURL, allowingReadAccessTo: bundleURL)
         
         let request = URLRequest(url: bundleURL)
         webView.load(request)
-        
-        //        else {
-        //            let request = URLRequest(url: url)
-        //            webView.load(request)
-        //        }
     }
 }
