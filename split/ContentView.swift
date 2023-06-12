@@ -11,34 +11,40 @@ struct ContentView: View {
     
     @State var launcher: Launcher?
     let BM = BundleManager()
-
+    
     var body: some View {
         NavigationView {
             VStack {
-                
-                Button("Build Launcher") {
-                    Task {
-                        do {
-                            self.launcher = try await BM.buildLauncher()
-                        } catch {
-                            print("Failed to get launcher")
+                if let appList = self.launcher {
+                    Button("Update All") {
+                        Task {
+                            await BM.downloadBundles(apps: launcher!.apps)
                         }
                     }
-                }
-                
-                Button("Download All") {
-                    Task {
-                        await BM.downloadBundles(apps: launcher!.apps)
-                    }
-                }
-                
-                
-                if let appList = self.launcher {
+                    .padding()
+                    .background(.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    
                     List {
                         ForEach(appList.menu, id: \.title) { menuItem in
                             NavigationLink(destination: WebView(app: appList.apps.first(where: {$0.id == menuItem.target})!), label: { Text(menuItem.title) })
                         }
                     }
+                } else {
+                    Button("Build Launcher") {
+                        Task {
+                            do {
+                                self.launcher = try await BM.buildLauncher()
+                            } catch {
+                                print("Failed to get launcher")
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
                 }
             }
         }
